@@ -1,5 +1,23 @@
 // ---- Define your dialogs  and panels here ----
+let new_permission = define_new_effective_permissions("new_permission", true);
+$('#sidepanel').append(new_permission);
+$('#new_permission').attr('filepath', '/C');
 
+let new_user = define_new_user_select_field("new_user", "select user", on_user_change=function(selected_user) { 
+    $('#new_permission').attr('username', selected_user);
+});
+$('#sidepanel').prepend(new_user);
+
+let new_dialog = define_new_dialog("new dialog", "dialog");
+$('.perm_info').click(function(){
+    console.log('clicked!')
+    let filepath = $('#new_permission').attr('filepath')
+    let user = $('#new_permission').attr('username')
+    let perm = $(this).attr('permission_name')
+    let action_obj = allow_user_action(path_to_file[filepath], all_users[user], perm, true)
+    new_dialog.text(get_explanation_text(action_obj))
+    new_dialog.dialog('open')
+})
 
 
 // ---- Display file structure ----
